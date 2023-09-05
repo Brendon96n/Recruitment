@@ -39,15 +39,17 @@ int main() {
 
     FILE *filename; // Define the variable file as a File.
     
-    if (filename == NULL) {
-        return 1;
-    } // Check to see if file exists
     
     for (int n = 0; n < 10; n++) {
         int PostionId = -1;
         float StoredDist = -1;
         struct VehiclePosition position; // buffer where data is to be stored
         filename = fopen("VehiclePositions.dat", "rb"); // Open the binary file using the rb method.
+
+        if (filename == NULL) {
+            return 1;
+        } // Check to see if file exists
+
         while (fread(&position, sizeof(struct VehiclePosition), 1, filename) == 1) {
             float distance = DistanceCalc(co_ordinates[n][0], co_ordinates[n][1],position.Latitude, position.Longitude);
             if (StoredDist == -1 || distance < StoredDist) {
